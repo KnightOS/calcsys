@@ -17,7 +17,7 @@ menu_main:
     pcall(fastCopy)
     ld b, a
     pcall(flushKeys)
-    pcall(waitKey)
+    corelib(appWaitKey)
     cp kMODE
     kjp(z, exit)
     cp kF3

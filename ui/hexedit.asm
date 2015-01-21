@@ -20,7 +20,7 @@ _:
     pcall(fastCopy)
     ld b, a
     pcall(flushKeys)
-    pcall(waitKey)
+    corelib(appWaitKey)
     cp kClear
     kjp(z, menu_main)
     cp kF3
