@@ -31,6 +31,15 @@ drawMainWindow:
     corelib(drawWindow)
     ret
 
+confirm_dangerous:
+    kld(hl, dangerous_text)
+    kld(de, dangerous_options)
+    ld b, 0
+    xor a
+    corelib(showMessage)
+    cp 1
+    ret
+
 ; Shows the menu currently loaded into corelib_menu
 sys_showMenu:
     kld(hl, (corelib_menu))
@@ -43,6 +52,7 @@ sys_showMenu:
     kld(hl, (corelib_menu + 2))
     add a, l \ ld l, a \ jr nc, $+3 \ inc h
     ld e, (hl) \ inc hl \ ld d, (hl)
+    pop hl
     ex de, hl
     kld(bc, 0)
     add hl, bc
@@ -53,6 +63,7 @@ corelib_menu:
     .dw menu_main_corelib_menu_actions
 
 #include "ui/main.asm"
+#include "ui/hexedit.asm"
 
 corelibPath:
     .db "/lib/core", 0
@@ -64,3 +75,7 @@ caret_icon:
     .db 0b11100000
     .db 0b11000000
     .db 0b10000000
+dangerous_text:
+    .db "This action may be\ndangerous.\nContinue?", 0
+dangerous_options:
+    .db 2, "No", 0, "Yes", 0

@@ -5,6 +5,7 @@ menu_main:
     kld(hl, menu_main_corelib_menu_actions)
     kld((corelib_menu + 2), hl)
 
+.redraw:
     kcall(drawMainWindow)
     ld de, 0x0608
     ld b, 6
@@ -21,6 +22,7 @@ menu_main:
     kjp(z, exit)
     cp kF3
     kcall(z, sys_showMenu)
+    jr z, .redraw
     cp kUp
     jr z, .up
     cp kDown
@@ -80,7 +82,7 @@ menu_main_text:
     .db "Help\n"
     .db "Exit", 0
 menu_main_options:
-    .dw exit ;.dw hex_editor
+    .dw hex_editor
     .dw exit ;.dw disassembler
     .dw exit ;.dw port_monitor
     .dw exit ;.dw filesystem
