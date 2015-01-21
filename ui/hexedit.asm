@@ -109,8 +109,7 @@ draw_hex_page:
 .inner_loop:
         ld a, (hl)
         inc hl
-        pcall(drawHexA)
-        ld a, ' ' \ pcall(drawChar)
+        kcall(.drawEntry)
         djnz .inner_loop
     pop bc
     pcall(newline)
@@ -133,6 +132,31 @@ draw_hex_page:
     ld bc, (5 << 8) + 9
     pcall(rectXOR)
     ret
+.drawEntry:
+    push de
+    push hl
+        kld(hl, hexedit_display_mode)
+        bit 0, (hl)
+        jr z, .hex
+        cp 0x20
+        jr c, .special
+        cp 0x7F
+        jr nc, .special
+        pcall(drawChar)
+        jr .cont
+.special:
+        ld a, '_'
+        pcall(drawChar)
+        jr .cont
+.hex:
+        pcall(drawHexA)
+.cont:
+    pop hl
+    pop de
+    ld a, 9
+    add a, d
+    ld d, a
+    ret
 
 hexedit_address:
     .dw 0
@@ -154,29 +178,32 @@ hexedit_toggle_flash:
     kjp(hex_editor)
 
 hexedit_switch_display:
-    kld(hl, (hexedit_display_mode))
-    inc hl
+    kld(hl, hexedit_display_mode)
+    inc (hl)
     kjp(hex_editor)
 
 hexedit_corelib_menu_flash_locked:
-    .db 55 ; Width of menu
-    .db 5
+    .db 65 ; Width of menu
+    .db 6
     .db "Go to address", 0
     .db "Memory banks", 0
     .db "Unlock Flash", 0
-    .db "Switch display", 0
-    .db "Back", 0
+    .db "Switch mode", 0
+    .db "Disassemble here", 0
+    .db "Back to home", 0
 hexedit_corelib_menu_flash_unlocked:
-    .db 55 ; Width of menu
-    .db 5
+    .db 65 ; Width of menu
+    .db 6
     .db "Go to address", 0
     .db "Memory banks", 0
     .db "Lock Flash", 0
-    .db "Switch display", 0
-    .db "Back", 0
+    .db "Switch mode", 0
+    .db "Disassemble here", 0
+    .db "Back to home", 0
 hexedit_corelib_menu_actions:
     .dw menu_main ;.dw hexedit_goto
     .dw menu_main ;.dw hexedit_banks
     .dw hexedit_toggle_flash
     .dw hexedit_switch_display
+    .dw menu_main ;.dw hexedit_disassemble
     .dw menu_main
