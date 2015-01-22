@@ -64,6 +64,7 @@ corelib_menu:
 
 #include "ui/main.asm"
 #include "ui/hexedit.asm"
+#include "ui/disassembler.asm"
 
 corelibPath:
     .db "/lib/core", 0

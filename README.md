@@ -1,7 +1,6 @@
 # calcsys
 
-A poweruser tool for fiddling about on your calculator. Some parts of Dan
-Englender's original calcsys have been adapted for this software.
+A poweruser tool for fiddling about on your calculator.
 
 ## Compiling
 

@@ -4,7 +4,7 @@ include .knightos/variables.make
 ALL_TARGETS:=$(BIN)calcsys
 
 # This is all the make targets to produce said files
-$(BIN)calcsys: *.asm ui/*.asm
+$(BIN)calcsys: *.asm core/*.asm ui/*.asm
 	mkdir -p $(BIN)
 	$(AS) $(ASFLAGS) --listing $(OUT)main.list main.asm $(BIN)calcsys
 

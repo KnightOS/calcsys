@@ -34,6 +34,8 @@ _:
     kjp(z, .left)
     cp kRight
     kjp(z, .right)
+    cp kD
+    kjp(z, hexedit_disassemble)
     jr .loop
 .down:
     kld(hl, hexedit_offset)
@@ -182,10 +184,18 @@ hexedit_switch_display:
     inc (hl)
     kjp(hex_editor)
 
+hexedit_disassemble:
+    kld(hl, (hexedit_address))
+    kld(bc, (hexedit_offset))
+    add hl, bc
+    kld((dasm_address), hl)
+    kjp(disassembler)
+
 hexedit_corelib_menu_flash_locked:
     .db 65 ; Width of menu
-    .db 6
+    .db 7
     .db "Go to address", 0
+    .db "Find value", 0
     .db "Memory banks", 0
     .db "Unlock Flash", 0
     .db "Switch mode", 0
@@ -193,8 +203,9 @@ hexedit_corelib_menu_flash_locked:
     .db "Back to home", 0
 hexedit_corelib_menu_flash_unlocked:
     .db 65 ; Width of menu
-    .db 6
+    .db 7
     .db "Go to address", 0
+    .db "Find value", 0
     .db "Memory banks", 0
     .db "Lock Flash", 0
     .db "Switch mode", 0
@@ -202,8 +213,9 @@ hexedit_corelib_menu_flash_unlocked:
     .db "Back to home", 0
 hexedit_corelib_menu_actions:
     .dw menu_main ;.dw hexedit_goto
+    .dw menu_main ;.dw hexedit_find
     .dw menu_main ;.dw hexedit_banks
     .dw hexedit_toggle_flash
     .dw hexedit_switch_display
-    .dw menu_main ;.dw hexedit_disassemble
+    .dw hexedit_disassemble
     .dw menu_main

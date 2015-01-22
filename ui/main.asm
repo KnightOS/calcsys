@@ -83,7 +83,7 @@ menu_main_text:
     .db "Exit", 0
 menu_main_options:
     .dw hex_editor
-    .dw exit ;.dw disassembler
+    .dw disassembler
     .dw exit ;.dw port_monitor
     .dw exit ;.dw filesystem
     .dw exit ;.dw help
