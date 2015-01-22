@@ -94,6 +94,7 @@ drawDasm:
     ld d, 2
     djnz .loop
     ret
+    ; TODO: Merge instruction formats and do something more clever than this
 .draw_imm8:
         ld a, b
         cp 8
@@ -101,12 +102,18 @@ drawDasm:
         ld a, 2 \ kld((first_width), a)
 _:
         pop de
-        pcall(drawStr)
-        pop hl
-        ld a, (hl)
         inc hl
-        push hl \ push de
+        pcall(drawStr)
+        xor a \ ld b, 1 \ cpir
+        ld b, h \ ld c, l
+        pop hl
+    ld a, (hl)
+    inc hl
+        push hl
         pcall(drawHexA)
+        ld h, b \ ld l, c
+        pcall(drawStr)
+        push de
         jr .cont
 .draw_imm16:
         ld a, b
@@ -127,7 +134,7 @@ _:
         ld h, b \ ld l, c
         pcall(drawHexHL)
         push de
-        jr .cont
+        kjp(.cont)
 .draw_imms8:
         ld a, b
         cp 8
@@ -144,7 +151,7 @@ _:
         add a, l \ ld l, a \ jr nc, $+3 \ inc h
         pcall(drawHexHL)
         push de
-        jr .cont
+        kjp(.cont)
 .draw_simple:
         ld a, b
         cp 8
@@ -154,9 +161,7 @@ _:
         pop de \ push de
         inc hl
         pcall(drawStr)
-        jr .cont
-.pc:
-    .dw 0
+        kjp(.cont)
 .setGOTO:
     kld((jump_point), bc)
 

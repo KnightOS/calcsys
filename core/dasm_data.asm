@@ -412,8 +412,8 @@ main_30:
     .db inst_simple
     .db "NOP", 0
 main_31:
-    .db inst_simple
-    .db "NOP", 0
+    .db inst_imm16
+    .db "LD SP, ", 0
 main_32:
     .db inst_simple
     .db "NOP", 0
