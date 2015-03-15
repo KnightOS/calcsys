@@ -84,7 +84,7 @@ menu_main_text:
 menu_main_options:
     .dw hex_editor
     .dw disassembler
-    .dw exit ;.dw port_monitor
+    .dw port_monitor
     .dw exit ;.dw filesystem
     .dw exit ;.dw help
     .dw exit
