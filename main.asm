@@ -58,6 +58,26 @@ sys_showMenu:
     add hl, bc
     jp (hl)
 
+prompt_hex_8:
+    ld a, charsetHex
+    corelib(setCharSet)
+    ld bc, 4
+    kld(ix, zero_x_text)
+    ld a, '0'
+    ld (ix + 0), a
+    ld a, 'x'
+    ld (ix + 1), a
+    xor a
+    ld (ix + 2), a
+    ld (ix + 3), a
+    corelib(promptString)
+    xor a
+    corelib(setCharSet)
+    ret
+
+zero_x_text:
+    .db "0x", 0, 0, 0
+
 corelib_menu:
     .dw menu_main_corelib_menu
     .dw menu_main_corelib_menu_actions

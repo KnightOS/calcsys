@@ -15,6 +15,8 @@ port_monitor:
     jr z, .left
     cp kRight
     jr z, .right
+    cp kEnter
+    jr z, .edit
     jr .loop
 .down:
     kld(a, (portmon_selection))
@@ -62,6 +64,10 @@ port_monitor:
     add a, -4
     kld((portmon_offset), a)
     ret
+.edit:
+    kld(hl, edit_port_text)
+    kcall(prompt_hex_8)
+    kjp(port_monitor)
 
 draw_portmon:
     in a, (2) ; Check flash
@@ -163,3 +169,5 @@ portmon_corelib_menu_flash_unlocked:
 portmon_corelib_menu_actions:
     .dw portmon_toggle_flash
     .dw menu_main
+edit_port_text:
+    .db "Write to port:", 0
