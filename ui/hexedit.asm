@@ -103,9 +103,7 @@ draw_hex_page:
 .outer_loop:
     pcall(drawHexHL)
     ld a, ':' \ pcall(drawChar)
-    ld a, 4
-    add a, d
-    ld d, a
+    inc d \ inc d
     push bc
         ld b, 8
 .inner_loop:
@@ -192,7 +190,7 @@ hexedit_disassemble:
     kjp(disassembler)
 
 hexedit_corelib_menu_flash_locked:
-    .db 65 ; Width of menu
+    .db 70 ; Width of menu
     .db 7
     .db "Go to address", 0
     .db "Find value", 0
@@ -202,7 +200,7 @@ hexedit_corelib_menu_flash_locked:
     .db "Disassemble here", 0
     .db "Back to home", 0
 hexedit_corelib_menu_flash_unlocked:
-    .db 65 ; Width of menu
+    .db 70 ; Width of menu
     .db 7
     .db "Go to address", 0
     .db "Find value", 0

@@ -198,7 +198,7 @@ _:
     .db "0123456789ABCDEF"
 
 dasm_corelib_menu_no_jump:
-    .db 60
+    .db 64
     .db 5
     .db "Go to address", 0
     .db "Go to thread", 0
@@ -206,7 +206,7 @@ dasm_corelib_menu_no_jump:
     .db "Marks", 0
     .db "Back to home", 0
 dasm_corelib_menu_jump:
-    .db 60
+    .db 64
     .db 6
     .db "Jump to 0x"
 .jumpPoint:

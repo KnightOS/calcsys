@@ -90,7 +90,7 @@ menu_main_options:
     .dw exit
 .end:
 menu_main_corelib_menu:
-    .db 20 ; Width of menu
+    .db 22 ; Width of menu
     .db 1
     .db "Exit", 0
 menu_main_corelib_menu_actions:
